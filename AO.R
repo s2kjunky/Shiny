@@ -1,3 +1,4 @@
+library(shiny)
 library(shinydashboard)
 
 ui <- dashboardPage(skin = "red",
@@ -6,7 +7,7 @@ ui <- dashboardPage(skin = "red",
   
   dashboardSidebar(
     width = 235,
-    sidebarMenu(
+    sidebarMenu(id = "tabs",
       
       menuItem("GENERATOR"),
         menuSubItem("Run Data Last 7 days"),
@@ -24,13 +25,11 @@ ui <- dashboardPage(skin = "red",
         menuSubItem(""),
         menuSubItem(""),
         menuSubItem("")
-    
-      
-    )),
-  
-  
+      )
+    ),
   
   dashboardBody(
+    
     tags$head(tags$style(HTML('
       .main-header .logo {
         font-family: "Georgia", Times, "Times New Roman", serif;
@@ -47,7 +46,12 @@ ui <- dashboardPage(skin = "red",
 )
 
 
-server <- function(input, output) {}
+server <- function(input, output) {
+  output$res <- renderText({
+    paste("You've selected:", input$tabs)
+  })
+  
+}
 
 
 shinyApp(ui, server)
